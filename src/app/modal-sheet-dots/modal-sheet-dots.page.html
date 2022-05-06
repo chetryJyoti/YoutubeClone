@@ -1,0 +1,7 @@
+
+<ion-content>
+      <ion-item *ngFor="let item of dotsItems" lines="none">
+        <ion-icon [name]="item.icon" slot="start"></ion-icon>
+        <ion-label>{{item.text}} </ion-label>
+      </ion-item>
+</ion-content>

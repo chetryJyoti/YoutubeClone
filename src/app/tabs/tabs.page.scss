@@ -1,1 +1,14 @@
+ion-tab-bar{
+  --background:#fff;
+  ion-tab-button{
+    --color: var(--ion-color-primary);
+    ion-icon {
+      --ionicon-stroke-width: 16px;
+    }
+    .add-circle-icon{
+      font-size:50px;
+      --ionicon-stroke-width: 16px;
+    }
 
+  }
+}

@@ -1,17 +1,78 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+<ion-header #header>
+  <ion-toolbar color="light">
+    <img src="./assets/data/logo.png" alt="Youtube logo" width="100px" />
+    <ion-buttons slot="end">
+      <ion-button size="small">
+        <ion-icon name="tv-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <div class="segments-btn">
+      <ion-button
+        *ngFor="let segment of segments ; let i=index"
+        [ngClass]=" {'active':segment.selected,'inactive':!segment.selected} "
+        (click)="selectedSegment(i)"
+        size="small"
+        shape="round"
+      >
+        {{ segment.title}}
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+<ion-content [appHideHeader]="header" scrollEvents="true">
+  <div *ngIf="!videos.length">
+    <div *ngFor="let i of [].constructor(4)" class="ion-margin-bottom">
+      <ion-skeleton-text
+        animated
+        style="width: 100%; height: 30vh"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        style="width: 75%; height: 20px; margin: 10px"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        style="width: 40%; height: 20px; margin: 10px"
+      ></ion-skeleton-text>
+    </div>
+  </div>
+  <div *ngFor="let video of videos" class="video ion-margin-bottom">
+    <div class="duration">{{video.duration*1000 | date:'mm:ss'}}</div>
+    <img [src]="'./assets/data/' + video.id +'.jpeg'" alt="video-thumbnail" />
+    <ion-row>
+      <ion-col size="2">
+        <ion-avatar>
+          <img
+            [src]=" './assets/data/' +video.id + '-channel.jpeg' "
+            alt="video-account"
+            class="video-account"
+          />
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="8">
+        <ion-text> {{video.title}} </ion-text>
+        <div>
+          <ion-text color="medium" style="font-size: small">
+            {{video.author}} . {{video.views}} views . {{video.ago}} ago
+          </ion-text>
+        </div>
+      </ion-col>
+      <ion-col size="2" class="ion-text-right">
+        <ion-button size="small" fill="clear" (click)="add()">
+          <ion-icon name="ellipsis-vertical"> </ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>
